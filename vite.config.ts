@@ -4,16 +4,17 @@ import path from 'path';
 import {defineConfig, loadEnv} from 'vite';
 import dotenv from 'dotenv';
 
-dotenv.config({ override: true });
+dotenv.config();
 
 export default defineConfig(({mode}) => {
   const env = loadEnv(mode, '.', '');
-  console.log("[Vite Config] GEMINI_API_KEY found:", !!env.GEMINI_API_KEY);
+  const geminiApiKey = env.GEMINI_API_KEY || env.VITE_GEMINI_API_KEY || process.env.GEMINI_API_KEY || '';
+  console.log("[Vite Config] Gemini API key found:", !!geminiApiKey);
   return {
     plugins: [react(), tailwindcss()],
     define: {
-      'process.env.GEMINI_API_KEY': JSON.stringify(env.GEMINI_API_KEY),
-      'import.meta.env.VITE_GEMINI_API_KEY': JSON.stringify(env.GEMINI_API_KEY),
+      'process.env.GEMINI_API_KEY': JSON.stringify(geminiApiKey),
+      'import.meta.env.VITE_GEMINI_API_KEY': JSON.stringify(geminiApiKey),
       'process.env.APP_URL': JSON.stringify(env.APP_URL || ""),
     },
     resolve: {
