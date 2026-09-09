@@ -1,0 +1,49 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Helper function to check valid ID format
+    function isValidId(id) {
+      return id is string && id.size() > 0 && id.size() <= 128;
+    }
+
+    match /test/{docId} {
+      allow read, write: if true;
+    }
+
+    match /users/{userId} {
+      allow read, write: if isValidId(userId);
+    }
+
+    match /patients/{patientId} {
+      allow read, write: if isValidId(patientId);
+    }
+
+    match /prescriptions/{prescriptionId} {
+      allow read, write: if isValidId(prescriptionId);
+    }
+
+    match /appointments/{appointmentId} {
+      allow read, write: if isValidId(appointmentId);
+    }
+
+    match /vitals/{vitalId} {
+      allow read, write: if isValidId(vitalId);
+    }
+
+    match /private_data/{docId} {
+      allow read, write: if isValidId(docId);
+    }
+
+    match /alerts/{alertId} {
+      allow read, write: if isValidId(alertId);
+    }
+
+    match /stats/{statId} {
+      allow read, write: if isValidId(statId);
+    }
+
+    match /{document=**} {
+      allow read, write: if true;
+    }
+  }
+}

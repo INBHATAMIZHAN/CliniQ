@@ -1,0 +1,11 @@
+{
+  "name": "CliniQAI",
+  "description": "A working Proof of Concept (TRL 3) for AI-powered rural healthcare. Features include AI prescription scanning, drug safety analysis, and secure private data storage.",
+  "requestFramePermissions": [
+    "camera",
+    "microphone"
+  ],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}
