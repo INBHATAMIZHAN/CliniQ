@@ -1,0 +1,106 @@
+{
+  "entities": {
+    "User": {
+      "title": "User",
+      "description": "User login credentials and profile details",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "description": "User Identifier" },
+        "username": { "type": "string", "description": "Login username" },
+        "name": { "type": "string", "description": "User full name" },
+        "role": { "type": "string", "description": "Role: doctor, nurse, patient", "enum": ["doctor", "nurse", "patient"] },
+        "hospitalCode": { "type": "string", "description": "Hospital authorization code if staff" },
+        "loginCount": { "type": "number", "description": "Number of successful logins" },
+        "lastLoginAt": { "type": "string", "description": "ISO timestamp of last login" },
+        "createdAt": { "type": "string", "description": "ISO timestamp of account creation" }
+      },
+      "required": ["username", "name", "role"]
+    },
+    "Patient": {
+      "title": "Patient",
+      "description": "Patient medical record",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "description": "Patient Identifier" },
+        "name": { "type": "string", "description": "Patient full name" },
+        "age": { "type": "number", "description": "Patient age" },
+        "gender": { "type": "string", "description": "Gender" },
+        "weight": { "type": "number", "description": "Weight in kg" },
+        "blood_group": { "type": "string", "description": "Blood group" },
+        "allergies": { "type": "string", "description": "Known allergies" },
+        "chronic_conditions": { "type": "string", "description": "Chronic conditions" },
+        "past_illness": { "type": "string", "description": "Past medical history" },
+        "status": { "type": "string", "description": "Active, Recovered, Under Observation" },
+        "created_at": { "type": "string", "description": "ISO timestamp" }
+      },
+      "required": ["name", "created_at"]
+    },
+    "Prescription": {
+      "title": "Prescription",
+      "description": "Prescription record",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "description": "Prescription document ID" },
+        "patient_id": { "type": "string", "description": "Target patient ID" },
+        "doctor_name": { "type": "string", "description": "Doctor name" },
+        "symptoms": { "type": "string", "description": "Clinical symptoms" },
+        "medicines": { "type": "string", "description": "JSON string of medicines" },
+        "date": { "type": "string", "description": "Prescription date" }
+      },
+      "required": ["doctor_name", "date"]
+    },
+    "Appointment": {
+      "title": "Appointment",
+      "description": "Clinical appointment",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "description": "Appointment document ID" },
+        "patient_name": { "type": "string", "description": "Patient name" },
+        "doctor_name": { "type": "string", "description": "Doctor name" },
+        "time": { "type": "string", "description": "Appointment time" },
+        "reason": { "type": "string", "description": "Reason for visit" },
+        "date": { "type": "string", "description": "Appointment date" },
+        "status": { "type": "string", "description": "Appointment status" }
+      },
+      "required": ["patient_name", "doctor_name", "date"]
+    },
+    "Vital": {
+      "title": "Vital",
+      "description": "Patient vital signs record",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "description": "Vital record ID" },
+        "patient_id": { "type": "string", "description": "Target patient ID" },
+        "bp": { "type": "string", "description": "Blood pressure" },
+        "weight": { "type": "number", "description": "Weight in kg" },
+        "symptoms": { "type": "string", "description": "Reported symptoms" },
+        "notes": { "type": "string", "description": "Clinical notes" },
+        "recorded_by": { "type": "string", "description": "Staff name" },
+        "recorded_at": { "type": "string", "description": "ISO timestamp" }
+      },
+      "required": ["patient_id", "recorded_at"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": "User",
+      "description": "Collection of registered user accounts and login records"
+    },
+    "/patients/{patientId}": {
+      "schema": "Patient",
+      "description": "Collection of patient health records"
+    },
+    "/prescriptions/{prescriptionId}": {
+      "schema": "Prescription",
+      "description": "Collection of medical prescriptions"
+    },
+    "/appointments/{appointmentId}": {
+      "schema": "Appointment",
+      "description": "Collection of hospital appointments"
+    },
+    "/vitals/{vitalId}": {
+      "schema": "Vital",
+      "description": "Collection of patient vitals measurements"
+    }
+  }
+}
